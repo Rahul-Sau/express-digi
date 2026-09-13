@@ -1,7 +1,8 @@
+import 'dotenv/config'
 import express from "express";
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 app.use(express.json());
 
 let teaData = [];
@@ -43,14 +44,14 @@ app.put("/teas/:id", (req, res) => {
 });
 
 //delete
-app.delete('/teas/:id',(req,res)=>{
-  const index = teaData.findIndex(t=>t.id === parseInt(req.params.id))
-  if( index=== -1){
+app.delete("/teas/:id", (req, res) => {
+  const index = teaData.findIndex((t) => t.id === parseInt(req.params.id));
+  if (index === -1) {
     return res.status(404).send("Tea not found");
   }
-  teaData.splice(index,1)
+  teaData.splice(index, 1);
   res.status(204).send("Tea deleted");
-})
+});
 app.listen(port, () => {
   console.log(`Server is running at port: ${port}...`);
 });
